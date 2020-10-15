@@ -8,6 +8,8 @@ export class PromEcsExampleStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
+    const timeStreamDbName = 'EcsMetrics'
+
     const cluster = new ecs.Cluster(this, 'Cluster', {
       defaultCloudMapNamespace: {
         name: 'services'
@@ -46,7 +48,7 @@ export class PromEcsExampleStack extends cdk.Stack {
         streamPrefix: "prom"
       }),
       environment: {
-        TIMESTREAM_DB_NAME: "telegrafDB"
+        TIMESTREAM_DB_NAME: timeStreamDbName
 
       }
     });
@@ -65,6 +67,15 @@ export class PromEcsExampleStack extends cdk.Stack {
       cluster,
       taskDefinition
     });
+    
+    // Create Timestrema DB - Raw as no CfnXxx class exists
+    new cdk.CfnResource(this, 'MyTimeStreamDb', {
+      type: 'AWS::Timestream::Database',
+      properties: {
+        DatabaseName: timeStreamDbName
+      }
+    });
+
 
   };
 };
