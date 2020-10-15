@@ -1,8 +1,17 @@
-# Welcome to your CDK TypeScript project!
+# AWS Timestream - CDK TypeScript project!
 
-This is a blank project for TypeScript development with CDK.
+This is a project to demo using AWS Timestream with Telegraf to populate the DB with Prometheus metrics data.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+Creates the following resources
+
+* VPC
+* ECS Cluster (with CloudMap namespace)
+* Application Load Balanced Fargate Service - running a simple NodeJS App
+* Fargate Service - running custom Telegraf Agent container to scrape prometheus metrics
+* AWS Timestream DB 
+
+
+The `cdk.json` file tells the CDK Toolkit how to execute the app.
 
 ## Useful commands
 
